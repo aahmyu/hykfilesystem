@@ -7,4 +7,4 @@ Commands:
     - undone : Remove the completed flag from the selected item.
     - clear: Clear all the items in the list.txt.
     - remove: Select an item by its number and remove it from the list.
-    - help: display the help file.s
+    - help: display the help file.
