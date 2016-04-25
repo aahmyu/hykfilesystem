@@ -4,5 +4,7 @@ Commands:
     - list: List all the items saved in list.txt.
     - add: Add an item to list.txt.
     - done: Select an item by its number and then mark the item is completed.
+    - undone : Remove the completed flag from the selected item.
     - clear: Clear all the items in the list.txt.
+    - remove: Select an item by its number and remove it from the list.
     - help: display the help file.

@@ -20,20 +20,31 @@ switch (command) {
     case 'help':
         help();
         break;
+    case 'remove':
+        remove();
+        break;
+    case 'undone':
+        unDone();
+        break;
     default:
         process.stderr.write('The command was not found. \n');
         exit();
         break;
 }
 
-function list() {
+function list(items) {
     fs.readFile('./list.txt', 'utf8', function(error, data) {
         if (error) {
             console.error(error);
         }
         else {
             if (data.length > 0) {
-                process.stdout.write(data);
+                var count = 0;
+                items = data.split('\n');
+                for (var i = 0; i < items.length - 1; i++) {
+                    count++;
+                    process.stderr.write(count + '- ' + items[i] + '\n');
+                }
             }
             else {
                 process.stderr.write('The list is empty, Please add some items first. \n');
@@ -43,21 +54,13 @@ function list() {
 }
 
 function add(item) {
-    fs.readFile('./list.txt', 'utf8', function(error, data) {
+    item = process.argv.slice(3).join(' ');
+    fs.appendFile('./list.txt', item + '\n', 'utf8', function(error) {
         if (error) {
             console.error(error);
         }
-        else {
-            item = process.argv.slice(3).join(' ');
-            var calls = data.split('\n').length;
-            fs.appendFile('./list.txt', calls + '- ' + item + '\n', 'utf8', function(error) {
-                if (error) {
-                    console.error(error);
-                }
-            });
-        }
+        process.stdout.write('The item has been added to your list. \n');
     });
-
 }
 
 function clear() {
@@ -89,12 +92,12 @@ function done() {
                     });
                 }
                 else {
-                    process.stderr.write('This item is already flagged as completed. \n');
+                    process.stderr.write('This item has already been flagged as completed. \n');
                 }
 
             }
             else {
-                process.stderr.write('The item was not in the list. \n');
+                process.stderr.write('The item was not found in the list. \n');
             }
         }
     });
@@ -119,6 +122,60 @@ function exit() {
         else {
             process.stderr.write(help + '\n');
             process.exit(1);
+        }
+    });
+}
+
+function remove(item) {
+    var select = parseInt(todo, 10) - 1;
+    fs.readFile('./list.txt', 'utf8', function(error, data) {
+        if (error) {
+            console.error(error);
+        }
+        else {
+            var regex = /^\s*\n/gm;
+            var splitted = data.split('\n');
+            var position = splitted[select].length;
+            var removed = splitted.slice(position + 1);
+            var replaced = data.replace(splitted[select], removed);
+            var noBreaks = replaced.replace(regex, "");
+            process.stdout.write('The selected item has been removed.' + '\n');
+            fs.writeFile('./list.txt', noBreaks, 'utf8', function(error) {
+                if (error) {
+                    console.error(error);
+                }
+            });
+        }
+    });
+}
+
+function unDone(item) {
+    var select = parseInt(todo, 10) - 1;
+    fs.readFile('./list.txt', 'utf8', function(error, data) {
+        if (error) {
+            console.error(error);
+        }
+        else {
+            var splitted = data.split('\n');
+            if (splitted[select] != undefined) {
+                var marker = ' *Completed.';
+                if (splitted[select].indexOf(marker) != -1) {
+                    var newData = data.replace(marker, '');
+                    process.stdout.write('The complete flag has been removed from this item.' + '\n');
+                    fs.writeFile('./list.txt', newData, 'utf8', function(error) {
+                        if (error) {
+                            console.error(error);
+                        }
+                    });
+                }
+                else {
+                    process.stderr.write('This item has not been completed yet. \n');
+                }
+
+            }
+            else {
+                process.stderr.write('The item was not found in the list. \n');
+            }
         }
     });
 }
