@@ -54,7 +54,6 @@ function list(items) {
 }
 
 function add(item) {
-    var arrayOfItems = [];
     item = process.argv.slice(3).join(' ');
     if (item.length != 0) {
         fs.appendFile('./list.txt', item + '\n', 'utf8', function(error) {
@@ -65,35 +64,7 @@ function add(item) {
         });
     }
     else {
-        process.stdin.setEncoding('utf8');
-        process.stdout.write('Please enter the item(s) name(s) to add to the list. \nPress Ctrl + D when done to confirm adding them to the list: \n');
-        process.stdin.on('readable', () => {
-            var chunk = process.stdin.read();
-            if (chunk !== null) {
-                item = chunk;
-                arrayOfItems.push(item);
-            }
-        });
-
-        process.stdin.on('end', () => {
-            if (item.length != 0) {
-                console.log(arrayOfItems);
-                for (var i = 0; i < arrayOfItems.length; i++) {
-                    fs.appendFile('./list.txt', arrayOfItems[i], 'utf8', function(error) {
-                        if (error) {
-                            console.error(error);
-                        }
-
-                    });
-                }
-                process.stdout.write('The item(s) has been added to your list. \n');
-            }
-            else {
-                process.stdout.write('Nothing to add. \n');
-            }
-
-
-        });
+        addListen(item);
     }
 
 }
@@ -168,18 +139,24 @@ function remove(item) {
             console.error(error);
         }
         else {
-            var regex = /^\s*\n/gm;                                  // Regex to get rid of the empty line in the list after removing the item.
+            var regex = /^\s*\n/gm;                    // Regex to get rid of the empty line in the list after removing the item.
             var splitted = data.split('\n');
-            var position = splitted[select].length;
-            var removed = splitted.slice(position + 1);
-            var replaced = data.replace(splitted[select], removed);
-            var noBreaks = replaced.replace(regex, "");
-            process.stdout.write('The selected item has been removed.' + '\n');
-            fs.writeFile('./list.txt', noBreaks, 'utf8', function(error) {
-                if (error) {
-                    console.error(error);
-                }
-            });
+            if (splitted[select] != undefined) {
+                var position = splitted[select].length;
+                var removed = splitted.slice(position + 1);
+                var replaced = data.replace(splitted[select], removed);
+                var noBreaks = replaced.replace(regex, "");
+                process.stdout.write('The selected item has been removed.' + '\n');
+                fs.writeFile('./list.txt', noBreaks, 'utf8', function(error) {
+                    if (error) {
+                        console.error(error);
+                    }
+                });
+            }
+            else {
+                process.stdout.write('Please choose an item to remove it from the list. \n');
+            }
+
         }
     });
 }
@@ -212,5 +189,37 @@ function unDone(item) {
                 process.stderr.write('The item was not found in the list. \n');
             }
         }
+    });
+}
+
+function addListen(item) {
+    var arrayOfItems = [];
+    process.stdin.setEncoding('utf8');
+    process.stdout.write("Please enter the item's name(s) to add to the list \nPress Ctrl + D when done to confirm adding them to the list \n");
+    process.stdin.on('readable', () => {
+        var chunk = process.stdin.read();
+        if (chunk !== null) {
+            item = chunk;
+            arrayOfItems.push(item);
+        }
+    });
+
+    process.stdin.on('end', () => {
+        if (item.length != 0) {
+            for (var i = 0; i < arrayOfItems.length; i++) {
+                fs.appendFile('./list.txt', arrayOfItems[i], 'utf8', function(error) {
+                    if (error) {
+                        console.error(error);
+                    }
+
+                });
+            }
+            process.stdout.write('The item(s) has been added to your list. \n');
+        }
+        else {
+            process.stdout.write('Nothing to add. \n');
+        }
+
+
     });
 }
