@@ -1,5 +1,3 @@
-Usage: node . <command>
-
 Commands:
     - list: List all the items saved the list.
     - add: Add an item to the list.
