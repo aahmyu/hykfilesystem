@@ -85,7 +85,7 @@ function done() {
         }
         else {
             var splitted = data.split('\n');
-            if (splitted[select] != undefined) {
+            if (splitted[select] != undefined && splitted[select].length > 0) {
                 var marker = ' *Completed.';
                 var completed = splitted[select].concat(marker);
                 var newData = data.replace(splitted[select], completed);
