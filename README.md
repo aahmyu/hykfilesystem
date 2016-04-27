@@ -1,4 +1,4 @@
-# Commands:
+## Commands:
 * list: List all the items saved the list.
 * add: Add an item to the list.
 * done: Select an item by its number and then mark the item is completed.
