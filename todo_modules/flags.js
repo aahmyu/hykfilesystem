@@ -1,8 +1,6 @@
 const fs = require("fs");
 
-const todo = process.argv[3];
-
-function done() {
+function done(todo) {
     let select = parseInt(todo, 10) - 1;
     fs.readFile('./list.txt', 'utf8', function(error, data) {
         if (error) {
@@ -34,7 +32,7 @@ function done() {
     });
 }
 
-function unDone(item) {
+function unDone(todo) {
     let select = parseInt(todo, 10) - 1;
     fs.readFile('./list.txt', 'utf8', function(error, data) {
         if (error) {

@@ -10,6 +10,8 @@ const flag = require("./todo_modules/flags.js");
 
 const remove = require("./todo_modules/remove.js");
 
+const todo = process.argv[3];
+
 const command = process.argv[2];
 
 
@@ -24,16 +26,16 @@ switch (command) {
         clear.clearList();
         break;
     case 'done':
-        flag.done();
+        flag.done(todo);
         break;
     case 'help':
         help();
         break;
     case 'remove':
-        remove.removeItem();
+        remove.removeItem(todo);
         break;
     case 'undone':
-        flag.unDone();
+        flag.unDone(todo);
         break;
     default:
         process.stderr.write('The command was not found. \n');

@@ -1,8 +1,7 @@
 const fs = require("fs");
 
-const todo = process.argv[3];
 
-function removeItem(item) {
+function removeItem(todo) {
     let select = parseInt(todo, 10) - 1;
     fs.readFile('./list.txt', 'utf8', function(error, data) {
         if (error) {
