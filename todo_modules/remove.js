@@ -2,7 +2,7 @@ const fs = require("fs");
 
 
 function removeItem(todo) {
-    let select = parseInt(todo, 10) - 1;
+    const select = parseInt(todo, 10) - 1;
     fs.readFile('./list.txt', 'utf8', function(error, data) {
         if (error) {
             console.error(error);
@@ -12,8 +12,8 @@ function removeItem(todo) {
             const splitted = data.split('\n');
             if (splitted[select] != undefined) {
                 if (splitted[select].length > 0) {
-                    let replaced = data.replace(splitted[select], "");
-                    let noBreaks = replaced.replace(regex, "");
+                    const replaced = data.replace(splitted[select], "");
+                    const noBreaks = replaced.replace(regex, "");
                     process.stdout.write('The selected item has been removed.' + '\n');
                     fs.writeFile('./list.txt', noBreaks, 'utf8', function(error) {
                         if (error) {
