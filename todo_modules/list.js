@@ -12,7 +12,7 @@ function list(items) {
                 for (let i of items) {
                     count++;
                     if (i.length > 0) {
-                        process.stderr.write(count + '- ' + i + '\n');
+                        process.stdout.write(count + '- ' + i + '\n');
                     }
                 }
             }
