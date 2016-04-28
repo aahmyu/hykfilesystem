@@ -4,7 +4,7 @@
   "description": "",
   "main": "todo.js",
   "author": "aahmyu <aahmyu@gmail.com>",
-  "repository": "git@github.com:aahmyu/hykfilesystem.git"
+  "repository": "git@github.com:aahmyu/hykfilesystem.git",
   "dependencies": {},
   "scripts": {
     "start": "node todo.js"
