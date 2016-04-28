@@ -1,9 +1,10 @@
 {
   "name": "hykfilesystem",
-  "version": "1.0.0",
-  "description": ",-----.,--.                  ,--. ,---.   ,--.,------.  ,------.     '  .--./|  | ,---. ,--.,--. ,-|  || o   \\  |  ||  .-.  \\ |  .---'     |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \\  :|  `--,      '  '--'\\|  |' '-' ''  ''  '\\ `-' | .'  /   |  ||  '--'  /|  `---.      `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'     -----------------------------------------------------------------",
+  "version": "2.0.0",
+  "description": "",
   "main": "todo.js",
-  "author": "aahmyu <git@github.com:aahmyu/hykfilesystem.git>",
+  "author": "aahmyu <aahmyu@gmail.com>",
+  "repository": "git@github.com:aahmyu/hykfilesystem.git"
   "dependencies": {},
   "scripts": {
     "start": "node todo.js"
