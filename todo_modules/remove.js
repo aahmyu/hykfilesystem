@@ -1,25 +1,17 @@
-const fs = require("fs");
+const rw = require("./listrw.js");
 
 
 function removeItem(todo) {
     const select = parseInt(todo, 10) - 1;
-    fs.readFile('./list.txt', 'utf8', function(error, data) {
-        if (error) {
-            console.error(error);
-        }
-        else {
-            const regex = /^\s*\n/gm;                            // Regex to get rid of the empty line in the list after removing the item.
+    rw.fileRead('./list.txt', function(data){
+        const regex = /^\s*\n/gm;                            // Regex to get rid of the empty line in the list after removing the item.
             const splitted = data.split('\n');
             if (splitted[select] != undefined) {
                 if (splitted[select].length > 0) {
                     const replaced = data.replace(splitted[select], "");
                     const noBreaks = replaced.replace(regex, "");
                     process.stdout.write('The selected item has been removed.' + '\n');
-                    fs.writeFile('./list.txt', noBreaks, 'utf8', function(error) {
-                        if (error) {
-                            console.error(error);
-                        }
-                    });
+                    rw.fileWrite('./list.txt', noBreaks);
                 }
                 else {
                     process.stdout.write('The selectd item does not exist. \n');
@@ -29,8 +21,6 @@ function removeItem(todo) {
             else {
                 process.stdout.write('Please choose an item to remove it from the list. \n');
             }
-
-        }
     });
 }
 

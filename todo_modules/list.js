@@ -1,12 +1,8 @@
-const fs = require("fs");
+const rw = require("./listrw.js");
 
 function list(items) {
-    fs.readFile('./list.txt', 'utf8', function(error, data) {
-        if (error) {
-            console.error(error);
-        }
-        else {
-            if (data.length > 0) {
+    rw.fileRead('./list.txt', function(data){
+        if (data.length > 0) {
                 let count = 0;
                 items = data.split('\n');
                 for (let i of items) {
@@ -19,7 +15,6 @@ function list(items) {
             else {
                 process.stdout.write('The list is empty, Please add some items first. \n');
             }
-        }
     });
 }
 

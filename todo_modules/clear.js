@@ -1,11 +1,7 @@
-const fs = require("fs");
+const rw = require("./listrw.js");
 
 function clearList() {
-    fs.writeFile('./list.txt', '', 'utf8', function(error) {
-        if (error) {
-            console.error(error);
-        }
-    });
+    rw.fileWrite('./list.txt', '');
 }
 
 module.exports = {
